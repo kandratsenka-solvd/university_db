@@ -2,8 +2,9 @@ package tests;
 
 
 import connection.ConnectionPool;
+import dao.PersonService;
 import org.testng.annotations.Test;
-import utils.DbQueryUtil;
+import utils.PersonUtil;
 
 import java.sql.Connection;
 import java.util.concurrent.*;
@@ -23,7 +24,8 @@ public class ConnectionTest {
                     connectionStage.thenAccept(connection -> {
                         CompletableFuture<Void> future = new CompletableFuture<>();
                         try {
-                            DbQueryUtil.addPersonToDB();
+                            PersonService personService = new PersonService();
+                            personService.add(PersonUtil.generateStudent(), connection);
                         } finally {
                             connectionPool.returnConnection(connection);
                             latch.countDown();

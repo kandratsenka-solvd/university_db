@@ -26,7 +26,7 @@ public class ConnectionPool {
 
     private static void createConnectionList() {
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            allConnections.add(DbConnectionUtil.getConnection());
+            allConnections.add(DbConnection.getConnection());
         }
     }
 

@@ -1,17 +1,14 @@
 package tests;
 
 import org.testng.annotations.Test;
-import connection.DbConnectionUtil;
-import utils.DbQueryUtil;
 
 public class UniversityTest {
 
     @Test
     public void testStudent() {
-        DbConnectionUtil.getConnection();
-//        DbQueryUtil.addSomeToDB();
+//        DbConnectionUtil.getConnection();
 //        DbQueryUtil.addPersonToDB();
-        DbQueryUtil.addStudentToDB();
-        DbConnectionUtil.closeConnection();
+//        DbQueryUtil.addStudentToDB();
+//        DbConnectionUtil.closeConnection();
     }
 }
