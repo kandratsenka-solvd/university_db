@@ -20,7 +20,7 @@ public class FileManagerUtil {
     public static String getValue(String fileName, String key) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            LOGGER.info("Reading JSON file: " + fileName);
+            LOGGER.info("Getting the [{}] value from the file [{}]", key, fileName);
             JsonNode rootNode = mapper.readTree(getResourceFileAsString(fileName));
             JsonNode valueNode = rootNode.get(key);
             if (valueNode != null) {

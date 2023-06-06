@@ -1,5 +1,6 @@
 package dao;
 
+import connection.ConnectionPool;
 import models.Person;
 
 import java.sql.Connection;
@@ -9,9 +10,9 @@ import java.util.List;
 
 public class PersonService implements ICommonDAO<Person> {
     @Override
-    public void add(Person person, Connection connection) {
+    public void add(Person person) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         try {
-//            Student student = PersonUtil.generateStudent();
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO person (name, date_of_birth, gender, address, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, person.getName());
@@ -23,6 +24,8 @@ public class PersonService implements ICommonDAO<Person> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+             ConnectionPool.getInstance().returnConnection(connection);
         }
     }
 
