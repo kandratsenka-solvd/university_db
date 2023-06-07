@@ -3,7 +3,6 @@ package connection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.FileManagerUtil;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -41,11 +40,11 @@ public class ConnectionPool {
 
     private static void createConnectionList() {
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            allConnections.add(createConnection());
+            allConnections.add(openConnection());
         }
     }
 
-    private static Connection createConnection() {
+    private static Connection openConnection() {
         Connection connection;
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);

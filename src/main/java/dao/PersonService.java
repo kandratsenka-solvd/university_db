@@ -2,6 +2,7 @@ package dao;
 
 import connection.ConnectionPool;
 import models.Person;
+import utils.FileManagerUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +14,7 @@ public class PersonService implements ICommonDAO<Person> {
     public void add(Person person) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO person (name, date_of_birth, gender, address, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil.getFileAsString("addPerson.sql"));
             preparedStatement.setString(1, person.getName());
             preparedStatement.setDate(2, person.getDateOfBirth());
             preparedStatement.setString(3, person.getGender());

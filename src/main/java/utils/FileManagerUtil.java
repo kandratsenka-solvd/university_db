@@ -21,7 +21,7 @@ public class FileManagerUtil {
         ObjectMapper mapper = new ObjectMapper();
         try {
             LOGGER.info("Getting the [{}] value from the file [{}]", key, fileName);
-            JsonNode rootNode = mapper.readTree(getResourceFileAsString(fileName));
+            JsonNode rootNode = mapper.readTree(getFileAsString(fileName));
             JsonNode valueNode = rootNode.get(key);
             if (valueNode != null) {
                 return valueNode.asText();
@@ -33,13 +33,14 @@ public class FileManagerUtil {
         return null;
     }
 
-    private static String getResourceFileAsString(String fileName) {
+    public static String getFileAsString(String fileName) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource(fileName);
         if (url == null) {
             throw new IllegalArgumentException("Url is null, check the FilePath.");
         }
         try {
+            LOGGER.info("Trying to retrieve resource file as string.");
             return Files.readString(Paths.get(url.toURI()));
         } catch (IOException | URISyntaxException e) {
             LOGGER.error("Error when retrieving resource file as string.");
