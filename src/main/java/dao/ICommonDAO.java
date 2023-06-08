@@ -1,11 +1,12 @@
 package dao;
 
 import models.Person;
-import java.util.List;
+
+import java.sql.ResultSet;
 
 public interface ICommonDAO<T> {
     void add(Person person);
-    List<T> getAll();
+    ResultSet getAll();
     T getById(int id);
     void remove(T t);
 }

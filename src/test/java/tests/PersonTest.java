@@ -1,14 +1,13 @@
 package tests;
 
 import connection.ConnectionPool;
-import dao.PersonService;
+import dao.PersonDAO;
 import org.testng.annotations.Test;
 import utils.PersonUtil;
 
-
 import java.util.concurrent.*;
 
-public class ConnectionTest {
+public class PersonTest {
 
     @Test
     public void testAddPerson() throws InterruptedException {
@@ -18,8 +17,8 @@ public class ConnectionTest {
         for (int i = 0; i < threadsNumber; i++) {
             executorService.submit(() -> {
                 try {
-                    PersonService personService = new PersonService();
-                    personService.add(PersonUtil.generateStudent());
+                    PersonDAO personDAO = new PersonDAO();
+                    personDAO.add(PersonUtil.generatePerson());
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -30,5 +29,11 @@ public class ConnectionTest {
         latch.await();
         executorService.shutdown();
         ConnectionPool.getInstance().closeAllConnections();
+    }
+
+    @Test
+    public void testGetAllPerson() {
+        PersonDAO personDAO = new PersonDAO();
+        personDAO.getAll();
     }
 }
