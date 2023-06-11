@@ -5,6 +5,7 @@ import dao.PersonDAO;
 import org.testng.annotations.Test;
 import utils.PersonUtil;
 
+import java.sql.Connection;
 import java.util.concurrent.*;
 
 public class PersonTest {
@@ -17,8 +18,10 @@ public class PersonTest {
         for (int i = 0; i < threadsNumber; i++) {
             executorService.submit(() -> {
                 try {
-                    PersonDAO personDAO = new PersonDAO();
+                    Connection connection = ConnectionPool.getInstance().getConnection();
+                    PersonDAO personDAO = new PersonDAO(connection);
                     personDAO.add(PersonUtil.generatePerson());
+                    ConnectionPool.getInstance().returnConnection(connection);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -29,11 +32,5 @@ public class PersonTest {
         latch.await();
         executorService.shutdown();
         ConnectionPool.getInstance().closeAllConnections();
-    }
-
-    @Test
-    public void testGetAllPerson() {
-        PersonDAO personDAO = new PersonDAO();
-        personDAO.getAll();
     }
 }

@@ -1,50 +1,92 @@
 package tests;
 
+import connection.ConnectionPool;
+import dao.PersonDAO;
 import dao.StudentDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 import utils.PersonUtil;
+import utils.ResultSetUtil;
+
+import java.sql.Connection;
+
 
 public class StudentTest {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @Test
     public void addStudent1() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        int studentId = studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        LOGGER.info(ResultSetUtil.getFirstRecord(studentDAO.getStudentById(studentId)));
+        studentDAO.graduateStudent(studentId, 1, 1);
+        studentDAO.updateStudent(studentId, 5);
+//        studentDAO.deleteStudentById(studentId);
+        ConnectionPool.getInstance().returnConnection(connection);
         }
 
     @Test
     public void addStudent2() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        ConnectionPool.getInstance().returnConnection(connection);
         }
 
     @Test
     public void addStudent3() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        ConnectionPool.getInstance().returnConnection(connection);
         }
 
     @Test
     public void addStudent4() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        ConnectionPool.getInstance().returnConnection(connection);
         }
 
     @Test
     public void addStudent5() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        ConnectionPool.getInstance().returnConnection(connection);
         }
 
     @Test
     public void addStudent6() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        ConnectionPool.getInstance().returnConnection(connection);
     }
 
     @Test
     public void addStudent7() {
-        StudentDAO studentDAO = new StudentDAO();
-        studentDAO.addStudent(PersonUtil.generateStudent());
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PersonDAO personDAO = new PersonDAO(connection);
+        int personId = personDAO.add(PersonUtil.generatePerson());
+        StudentDAO studentDAO = new StudentDAO(connection);
+        studentDAO.addStudent(PersonUtil.generateStudent(), personId);
+        ConnectionPool.getInstance().returnConnection(connection);
         }
 }
