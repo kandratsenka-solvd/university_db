@@ -14,7 +14,7 @@ public final class PersonUtil {
 
     public static Person generatePerson() {
         Person person = new Person();
-        person.setStatusId(faker.number().numberBetween(1, 5));
+        person.setTitleId(faker.number().numberBetween(1, 5));
         person.setFullName(faker.name().firstName() + " " +  faker.name().lastName());
         java.util.Date utilDate = faker.date().birthday();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -29,7 +29,7 @@ public final class PersonUtil {
     public static Student generateStudent() {
         Student student = new Student();
         student.setPersonId(1);
-        student.setGroupId(faker.number().numberBetween(1, 18));
+        student.setEduGroupId(faker.number().numberBetween(1, 18));
         return student;
     }
 }

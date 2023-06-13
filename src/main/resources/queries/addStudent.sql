@@ -1,2 +1,2 @@
-INSERT INTO student (person_id, group_id)
+INSERT INTO student (person_id, edu_group_id)
 VALUES (?, ?);

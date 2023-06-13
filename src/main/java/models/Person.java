@@ -6,7 +6,7 @@ import java.sql.Date;
 
 @Data
 public class Person {
-    private Integer statusId;
+    private Integer titleId;
     private String fullName;
     private Date dateOfBirth;
     private String gender;

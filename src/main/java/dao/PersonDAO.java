@@ -23,7 +23,7 @@ public class PersonDAO implements ICommonDAO<Person> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
                     .getFileAsString("queries/addPerson.sql"), PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, person.getStatusId());
+            preparedStatement.setInt(1, person.getTitleId());
             preparedStatement.setString(2, person.getFullName());
             preparedStatement.setDate(3, person.getDateOfBirth());
             preparedStatement.setString(4, person.getGender());

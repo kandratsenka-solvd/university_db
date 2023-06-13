@@ -26,7 +26,7 @@ public class StudentTest {
         LOGGER.info(ResultSetUtil.getFirstRecord(studentDAO.getStudentById(studentId)));
         studentDAO.graduateStudent(studentId, 1, 1);
         studentDAO.updateStudent(studentId, 5);
-//        studentDAO.deleteStudentById(studentId);
+        studentDAO.deleteStudentById(studentId);
         ConnectionPool.getInstance().returnConnection(connection);
         }
 
