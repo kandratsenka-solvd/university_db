@@ -1,0 +1,20 @@
+INSERT INTO course (course_name, department_id)
+VALUES
+('Structural Analysis and Design', 1),
+('Geotechnical Engineering', 1),
+('Thermodynamics and Heat Transfer', 2),
+('Manufacturing Processes and Automation', 2),
+('Power Systems Engineering', 3),
+('Control Systems and Robotics', 3),
+('Cell Biology', 4),
+('Genetics', 4),
+('Organic Chemistry', 5),
+('Analytical Chemistry', 5),
+('Quantum Mechanics', 6),
+('Electromagnetism', 6),
+('Data Structures and Algorithms', 7),
+('Database Systems', 7),
+('Information Security', 8),
+('Business Process Management', 8),
+('Software Development Life Cycle', 9),
+('Software Testing and Quality Assurance', 9);

@@ -103,9 +103,10 @@ public class ConnectionPool {
     public void closeAllConnections() {
         for (Connection connection : allConnections) {
             try {
+                LOGGER.info("Closing the connection [{}]", connection);
                 connection.close();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                LOGGER.error("Failed to close the connection [{}]", connection);
             }
         }
         allConnections.clear();

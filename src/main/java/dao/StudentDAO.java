@@ -19,7 +19,7 @@ public class StudentDAO extends PersonDAO {
     public int addStudent(Student student, Integer personId) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/addStudent.sql"), PreparedStatement.RETURN_GENERATED_KEYS);
+                    .getFileAsString("queries/create/insertStudent.sql"), PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, personId);
             preparedStatement.setInt(2, student.getEduGroupId());
             preparedStatement.executeUpdate();
@@ -38,7 +38,7 @@ public class StudentDAO extends PersonDAO {
     public ResultSet getStudentById(int id) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/getStudentById.sql"));
+                    .getFileAsString("queries/read/getStudentById.sql"));
             preparedStatement.setInt(1, id);
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
@@ -49,7 +49,7 @@ public class StudentDAO extends PersonDAO {
     public void updateStudent(Integer studentId, Integer groupId) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/updateStudent.sql"));
+                    .getFileAsString("queries/update/updateStudentEduGroup.sql"));
             preparedStatement.setInt(1, groupId);
             preparedStatement.setInt(2, studentId);
             preparedStatement.executeUpdate();
@@ -61,7 +61,7 @@ public class StudentDAO extends PersonDAO {
     public void deleteStudentById(Integer studentId) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/deleteStudent.sql"));
+                    .getFileAsString("queries/delete/deleteStudentById.sql"));
             preparedStatement.setInt(1, studentId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class StudentDAO extends PersonDAO {
     public void graduateStudent(Integer personId, Integer qualification_id, Integer degree_id) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/graduateStudent.sql"));
+                    .getFileAsString("queries/read/graduateStudent.sql"));
             preparedStatement.setInt(1, personId);
             preparedStatement.setInt(2, qualification_id);
             preparedStatement.setInt(3, degree_id);

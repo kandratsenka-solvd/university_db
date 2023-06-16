@@ -40,10 +40,10 @@ public class FileManagerUtil {
             throw new IllegalArgumentException("Url is null, check the FilePath.");
         }
         try {
-            LOGGER.info("Trying to retrieve resource file as string.");
+            LOGGER.info("Getting resource file as string.");
             return Files.readString(Paths.get(url.toURI()));
         } catch (IOException | URISyntaxException e) {
-            LOGGER.error("Error when retrieving resource file as string.");
+            LOGGER.error("Error when getting resource file as string.");
             throw new RuntimeException(e);
         }
     }

@@ -4,10 +4,7 @@ import connection.ConnectionPool;
 import models.Person;
 import utils.FileManagerUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class PersonDAO implements ICommonDAO<Person> {
@@ -22,10 +19,10 @@ public class PersonDAO implements ICommonDAO<Person> {
     public int add(Person person) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/addPerson.sql"), PreparedStatement.RETURN_GENERATED_KEYS);
+                    .getFileAsString("queries/create/insertPerson.sql"), PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, person.getTitleId());
             preparedStatement.setString(2, person.getFullName());
-            preparedStatement.setDate(3, person.getDateOfBirth());
+            preparedStatement.setDate(3, (Date) person.getDateOfBirth());
             preparedStatement.setString(4, person.getGender());
             preparedStatement.setString(5, person.getAddress());
             preparedStatement.setString(6, person.getEmail());
@@ -51,7 +48,7 @@ public class PersonDAO implements ICommonDAO<Person> {
         ResultSet resultSet;
         try {
             preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/getAllPerson.sql"));
+                    .getFileAsString("queries/read/getAllPerson.sql"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

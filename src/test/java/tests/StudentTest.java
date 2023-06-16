@@ -6,13 +6,12 @@ import dao.StudentDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
-import utils.PersonUtil;
-import utils.ResultSetUtil;
+import utils.*;
 
 import java.sql.Connection;
 
 
-public class StudentTest {
+public class StudentTest extends BaseTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
