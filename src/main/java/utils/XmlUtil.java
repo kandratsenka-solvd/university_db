@@ -1,13 +1,14 @@
 package utils;
 
-import lombok.SneakyThrows;
+import enums.Degree;
+import enums.Qualification;
+import enums.Title;
 import models.Person;
+import models.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -21,21 +22,21 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
+import org.jdom2.input.SAXBuilder;
 
 public class XmlUtil {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static void validateXmlAgainstXsd(String fileName, String xmlString) {
+    public static boolean validateXmlAgainstXsd(String fileName, String xmlString) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource(fileName);
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -48,61 +49,42 @@ public class XmlUtil {
         Validator validator = schema.newValidator();
         try {
             validator.validate(new StreamSource(new StringReader(xmlString)));
+            return true;
         } catch (IOException | SAXException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
-    public static <T> T xmlToInstance(String xmlString, Class<T> clazz) throws JAXBException {
+    public static <T> T xmlToObject(String xmlString, Class<T> clazz) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         StringReader reader = new StringReader(xmlString);
         return clazz.cast(unmarshaller.unmarshal(reader));
     }
 
-    @SneakyThrows
-    public static <T> T xmlToObject(String xmlString, Class<T> clazz) {
-        SAXBuilder saxBuilder = new SAXBuilder();
-        Document document;
+    public static Root xmlToObjectsList() {
         try {
-            document = saxBuilder.build(new StringReader(xmlString));
-        } catch (JDOMException | IOException e) {
-            throw new RuntimeException(e);
+            File xmlFile = new File("src/main/resources/root.xml");
+            JAXBContext jaxbContext = JAXBContext.newInstance(Root.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            return (Root) jaxbUnmarshaller.unmarshal(xmlFile);
+        } catch (JAXBException e) {
+            e.printStackTrace();
         }
-        Element rootElement = document.getRootElement();
-        T object;
-        try {
-            object = clazz.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException |
-                 NoSuchMethodException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String fieldName = field.getName();
-            Element element = rootElement.getChild(fieldName);
-            if (element != null) {
-                String fieldValue = element.getText();
-                Class<?> fieldType = field.getType();
-                if (fieldType == Integer.class) {
-                    Integer intValue = Integer.valueOf(fieldValue);
-                    field.set(object, intValue);
-                } else if (fieldType == Date.class) {
-                    Date date = Date.valueOf(LocalDate.parse(fieldValue));
-                    field.set(object, date);
-                } else {
-                    try {
-                        field.set(object, fieldValue);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        return object;
+        return null;
     }
 
+    public static Document convertXmlToDocument(String fileName) {
+        try {
+//            File xmlFile = new File(FileManagerUtil.getFilePath(fileName));
+            File xmlFile = new File("src/main/resources/" + fileName);
+            SAXBuilder builder = new SAXBuilder();
+            return builder.build(xmlFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static Document generatePersonXml() {
         Element personElement = new Element("person");
@@ -117,4 +99,110 @@ public class XmlUtil {
         personElement.addContent(new Element("phoneNumber").setText(person.getPhoneNumber()));
         return document;
     }
+
+    public static Document generateRootXml() {
+        Random random = new Random();
+        List<Integer> degreeValues = new ArrayList<>();
+        for (Degree degree : Degree.values()) {
+            degreeValues.add(degree.getDegree());
+        }
+        List<Integer> qualificationValues = new ArrayList<>();
+        for (Qualification qualification : Qualification.values()) {
+            qualificationValues.add(qualification.getQualification());
+        }
+        List<Integer> titleValues = new ArrayList<>();
+        for (Title title : Title.values()) {
+            titleValues.add(title.getTitle());
+        }
+        Element rootElement = new Element("root");
+        Document document = new Document(rootElement);
+        Person person = PersonUtil.generatePerson();
+        Element personElement = new Element("person");
+        personElement.addContent(new Element("titleId")
+                .setText(String.valueOf(random.nextInt(titleValues.size()))));
+        personElement.addContent(new Element("fullName").setText(person.getFullName()));
+        personElement.addContent(new Element("dateOfBirth").setText(String.valueOf(person.getDateOfBirth())));
+        personElement.addContent(new Element("gender").setText(person.getGender()));
+        personElement.addContent(new Element("address").setText(person.getAddress()));
+        personElement.addContent(new Element("email").setText(person.getEmail()));
+        personElement.addContent(new Element("phoneNumber").setText(person.getPhoneNumber()));
+        rootElement.addContent(personElement);
+
+        Element studentElement = new Element("student");
+        studentElement.addContent(new Element("personId")
+                .setText(String.valueOf(random.nextInt( 1, 10))));
+        studentElement.addContent(new Element("eduGroupId")
+                .setText(String.valueOf(random.nextInt( 1, 10))));
+        rootElement.addContent(studentElement);
+
+        Element graduateElement = new Element("graduate");
+        graduateElement.addContent(new Element("personId")
+                .setText(String.valueOf(random.nextInt( 1, 10))));
+        graduateElement.addContent(new Element("degreeId")
+                .setText(String.valueOf(random.nextInt(degreeValues.size()))));
+        graduateElement.addContent(new Element("qualificationId")
+                .setText(String.valueOf(random.nextInt(qualificationValues.size()))));
+        rootElement.addContent(graduateElement);
+
+        Element applicantElement = new Element("applicant");
+        applicantElement.addContent(new Element("personId")
+                .setText(String.valueOf(random.nextInt( 1, 10))));
+        applicantElement.addContent(new Element("courseId")
+                .setText(String.valueOf(random.nextInt( 1, 10))));
+        rootElement.addContent(applicantElement);
+
+        return document;
+    }
+
+//    public static <T> T xmlToAnyObject(String xmlString, Class<T> clazz, String rootElementName) throws JAXBException {
+//        JAXBContext jaxbContext = JAXBContext.newInstance(rootElementName, clazz.getClassLoader());
+//        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+//        StringReader reader = new StringReader(xmlString);
+//        JAXBElement<T> jaxbElement = unmarshaller.unmarshal(new StreamSource(reader), clazz);
+//        return jaxbElement.getValue();
+//    }
+//
+//
+//    @SneakyThrows
+//    public static <T> T xmlToObj(String xmlString, Class<T> clazz) {
+//        SAXBuilder saxBuilder = new SAXBuilder();
+//        Document document;
+//        try {
+//            document = saxBuilder.build(new StringReader(xmlString));
+//        } catch (JDOMException | IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Element rootElement = document.getRootElement();
+//        T object;
+//        try {
+//            object = clazz.getDeclaredConstructor().newInstance();
+//        } catch (InstantiationException | IllegalAccessException |
+//                 NoSuchMethodException | InvocationTargetException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Field[] fields = clazz.getDeclaredFields();
+//        for (Field field : fields) {
+//            field.setAccessible(true);
+//            String fieldName = field.getName();
+//            Element element = rootElement.getChild(fieldName);
+//            if (element != null) {
+//                String fieldValue = element.getText();
+//                Class<?> fieldType = field.getType();
+//                if (fieldType == Integer.class) {
+//                    Integer intValue = Integer.valueOf(fieldValue);
+//                    field.set(object, intValue);
+//                } else if (fieldType == Date.class) {
+//                    Date date = Date.valueOf(LocalDate.parse(fieldValue));
+//                    field.set(object, date);
+//                } else {
+//                    try {
+//                        field.set(object, fieldValue);
+//                    } catch (IllegalAccessException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//            }
+//        }
+//        return object;
+//    }
 }

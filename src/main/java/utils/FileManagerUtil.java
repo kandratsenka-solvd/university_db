@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class FileManagerUtil {
 
@@ -31,6 +32,16 @@ public class FileManagerUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getFilePath(String fileName) {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        URL url = classloader.getResource(fileName);
+        try {
+            return String.valueOf(Paths.get(Objects.requireNonNull(url).toURI()));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String getFileAsString(String fileName) {

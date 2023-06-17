@@ -1,17 +1,17 @@
 package enums;
 
 public enum Qualification {
-    ENGINEER("engineer"),
-    CHEMIST("chemist"),
-    SOFTWARE_ENGINEER("software engineer");
+    ENGINEER(1),
+    CHEMIST(2),
+    SOFTWARE_ENGINEER(3);
 
-    private final String qualification;
+    private final Integer qualification;
 
-    Qualification(String degree) {
+    Qualification(Integer degree) {
         this.qualification = degree;
     }
 
-    public String getQualification() {
+    public Integer getQualification() {
         return qualification;
     }
 }

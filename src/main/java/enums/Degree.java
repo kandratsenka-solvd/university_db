@@ -1,17 +1,17 @@
 package enums;
 
 public enum Degree {
-    BACHELOR("bachelor"),
-    MASTER("master"),
-    DOCTOR("doctor");
+    BACHELOR(1),
+    MASTER(2),
+    DOCTOR(3);
 
-    private final String degree;
+    private final Integer degree;
 
-    Degree(String degree) {
+    Degree(Integer degree) {
         this.degree = degree;
     }
 
-    public String getDegree() {
+    public Integer getDegree() {
         return degree;
     }
 }

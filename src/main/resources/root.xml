@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <person>
+        <titleId>1</titleId>
+        <fullName>John Doe</fullName>
+        <dateOfBirth>1990-05-15</dateOfBirth>
+        <gender>Male</gender>
+        <address>123 Street, City</address>
+        <email>john.doe@example.com</email>
+        <phoneNumber>1234567890</phoneNumber>
+    </person>
+
+    <student>
+        <personId>1</personId>
+        <eduGroupId>1</eduGroupId>
+    </student>
+
+    <graduate>
+        <personId>2</personId>
+        <degreeId>20</degreeId>
+        <qualificationId>4</qualificationId>
+    </graduate>
+
+    <applicant>
+        <personId>3</personId>
+        <courseId>3</courseId>
+    </applicant>
+</root>

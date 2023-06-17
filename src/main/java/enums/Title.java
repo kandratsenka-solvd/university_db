@@ -1,19 +1,19 @@
 package enums;
 
 public enum Title {
-    LECTURER("lecturer"),
-    STUDENT("student"),
-    APPLICANT("applicant"),
-    GRADUATE("graduate");
+    LECTURER(1),
+    STUDENT(2),
+    APPLICANT(3),
+    GRADUATE(4);
 
 
-    private final String title;
+    private final Integer title;
 
-    Title(String title) {
+    Title(Integer title) {
         this.title = title;
     }
 
-    public String getTitle() {
+    public Integer getTitle() {
         return title;
     }
 }
