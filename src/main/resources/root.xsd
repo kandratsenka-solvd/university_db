@@ -35,6 +35,13 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="facultyType">
+        <xs:sequence>
+            <xs:element name="facultyId" type="xs:int"/>
+            <xs:element name="facultyName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="root">
         <xs:complexType>
             <xs:sequence>
@@ -42,6 +49,7 @@
                 <xs:element name="student" type="studentType"/>
                 <xs:element name="graduate" type="graduateType"/>
                 <xs:element name="applicant" type="applicantType"/>
+                <xs:element name="faculty" type="facultyType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

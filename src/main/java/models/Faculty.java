@@ -10,12 +10,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
 @NoArgsConstructor
-@XmlRootElement(name = "applicant")
+@XmlRootElement(name = "faculty")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Faculty {
 
     @JsonProperty("facultyId")
     private Integer facultyId;
-    @JsonProperty("facultyId")
-    private Integer facultyName;
+    @JsonProperty("facultyName")
+    private String facultyName;
 }

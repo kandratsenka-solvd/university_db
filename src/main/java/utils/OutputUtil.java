@@ -1,11 +1,14 @@
 package utils;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.jdom2.Document;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class OutputUtil {
 
@@ -28,8 +31,20 @@ public class OutputUtil {
         return null;
     }
 
-    public static String jsonToString(ObjectNode objectNode) {
-        return objectNode.toPrettyString();
+    public static void writeJsonNodeToFile(JsonNode jsonNode, String filename) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            String json = objectMapper.writeValueAsString(jsonNode);
+            FileOutputStream outputStream = new FileOutputStream(filename + ".json");
+            outputStream.write(json.getBytes());
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String jsonNodeToString(JsonNode jsonNode) {
+        return jsonNode.toPrettyString();
     }
 }
-

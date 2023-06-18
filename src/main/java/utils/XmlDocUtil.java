@@ -41,6 +41,7 @@ public class XmlDocUtil {
         for (Title title : Title.values()) {
             titleValues.add(title.getTitle());
         }
+
         Element rootElement = new Element("root");
         Document document = new Document(rootElement);
         Person person = PersonUtil.generatePerson();
@@ -77,6 +78,14 @@ public class XmlDocUtil {
         applicantElement.addContent(new Element("courseId")
                 .setText(String.valueOf(random.nextInt( 1, 10))));
         rootElement.addContent(applicantElement);
+
+        Element facultyElement = new Element("faculty");
+        facultyElement.addContent(new Element("facultyId")
+                .setText(String.valueOf(random.nextInt( 1, 10))));
+        facultyElement.addContent(new Element("facultyName")
+                .setText("Information Technology"));
+        rootElement.addContent(facultyElement);
+
         return document;
     }
 }

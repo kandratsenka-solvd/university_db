@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class JsonCreatorUtil {
+public class JsonNodeUtil {
+
     public static ObjectNode generateRootJson() {
         Random random = new Random();
         List<Integer> degreeValues = new ArrayList<>();
@@ -54,6 +55,12 @@ public class JsonCreatorUtil {
         applicantJson.put("personId", random.nextInt(1, 10));
         applicantJson.put("courseId", random.nextInt(1, 10));
         rootJson.set("applicant", applicantJson);
+
+        ObjectNode facultyJson = JsonNodeFactory.instance.objectNode();
+        String[] options = {"Engineering", "Natural Sciences", "Information Technology"};
+        facultyJson.put("facultyId", random.nextInt(1, 10));
+        facultyJson.put("facultyName", options[random.nextInt(options.length)]);
+        rootJson.set("faculty", facultyJson);
 
         return rootJson;
     }

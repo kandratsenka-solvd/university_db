@@ -1,14 +1,8 @@
 package utils;
 
-import enums.Degree;
-import enums.Qualification;
-import enums.Title;
-import models.Person;
-import models.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
-import org.jdom2.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -25,14 +19,11 @@ import java.io.StringReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 import org.jdom2.input.SAXBuilder;
 
-public class XmlUtil {
+public class XmlParseUtil {
 
     private static final Logger LOGGER = LogManager.getLogger();
 

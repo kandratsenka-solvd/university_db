@@ -20,16 +20,19 @@ public class Root {
     private Student student;
     private Graduate graduate;
     private Applicant applicant;
+    private Faculty faculty;
 
     @JsonCreator
     public Root(@JsonProperty("person") Person person,
                 @JsonProperty("student") Student student,
                 @JsonProperty("graduate") Graduate graduate,
-                @JsonProperty("applicant") Applicant applicant) {
+                @JsonProperty("applicant") Applicant applicant,
+                @JsonProperty("faculty") Faculty faculty) {
         this.person = person;
         this.student = student;
         this.graduate = graduate;
         this.applicant = applicant;
+        this.faculty = faculty;
     }
 }
 
