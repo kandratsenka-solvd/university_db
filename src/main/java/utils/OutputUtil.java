@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 
 public class OutputUtil {
 
-    public static void writeXmlToFile(Document document) {
+    public static void writeXmlDocToFile(Document document) {
         XMLOutputter outPutter = new XMLOutputter(Format.getPrettyFormat());
         try {
             outPutter.output(document, new FileOutputStream(document.getRootElement().getName() + ".xml"));
@@ -17,7 +17,7 @@ public class OutputUtil {
         }
     }
 
-    public static String xmlDocumentToString(Document document) {
+    public static String xmlDocToString(Document document) {
         XMLOutputter outPutter = new XMLOutputter(Format.getPrettyFormat());
         try {
             return outPutter.outputString(document);

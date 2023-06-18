@@ -55,24 +55,35 @@ public class XmlUtil {
         }
     }
 
-    public static <T> T xmlToObject(String xmlString, Class<T> clazz) throws JAXBException {
+    public static <T> T xmlToObject(String xmlContent, Class<T> clazz) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        StringReader reader = new StringReader(xmlString);
+        StringReader reader = new StringReader(xmlContent);
         return clazz.cast(unmarshaller.unmarshal(reader));
     }
 
-    public static Root xmlToObjectsList() {
+    public static <T> T xmlToObjectsList(String xmlContent, Class<T> clazz) {
         try {
-            File xmlFile = new File("src/main/resources/root.xml");
-            JAXBContext jaxbContext = JAXBContext.newInstance(Root.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            return (Root) jaxbUnmarshaller.unmarshal(xmlFile);
+            return clazz.cast(jaxbUnmarshaller.unmarshal(new StringReader(xmlContent)));
         } catch (JAXBException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed when deserializing XML to objects list.");
         }
         return null;
     }
+
+//    public static <T> T xmlToObjectsList(String fileName, Class<T> clazz) {
+//        try {
+//            File xmlFile = new File(FileManagerUtil.getFilePath(fileName));
+//            JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
+//            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+//            return (clazz.cast(jaxbUnmarshaller.unmarshal(xmlFile)));
+//        } catch (JAXBException e) {
+//            LOGGER.error("Failed when deserializing XML to objects list.");
+//        }
+//        return null;
+//    }
 
     public static Document convertXmlToDocument(String fileName) {
         try {
@@ -86,73 +97,7 @@ public class XmlUtil {
         return null;
     }
 
-    public static Document generatePersonXml() {
-        Element personElement = new Element("person");
-        Document document = new Document(personElement);
-        Person person = PersonUtil.generatePerson();
-        personElement.addContent(new Element("titleId").setText(String.valueOf(person.getTitleId())));
-        personElement.addContent(new Element("fullName").setText(person.getFullName()));
-        personElement.addContent(new Element("dateOfBirth").setText(String.valueOf(person.getDateOfBirth())));
-        personElement.addContent(new Element("gender").setText(person.getGender()));
-        personElement.addContent(new Element("address").setText(person.getAddress()));
-        personElement.addContent(new Element("email").setText(person.getEmail()));
-        personElement.addContent(new Element("phoneNumber").setText(person.getPhoneNumber()));
-        return document;
-    }
 
-    public static Document generateRootXml() {
-        Random random = new Random();
-        List<Integer> degreeValues = new ArrayList<>();
-        for (Degree degree : Degree.values()) {
-            degreeValues.add(degree.getDegree());
-        }
-        List<Integer> qualificationValues = new ArrayList<>();
-        for (Qualification qualification : Qualification.values()) {
-            qualificationValues.add(qualification.getQualification());
-        }
-        List<Integer> titleValues = new ArrayList<>();
-        for (Title title : Title.values()) {
-            titleValues.add(title.getTitle());
-        }
-        Element rootElement = new Element("root");
-        Document document = new Document(rootElement);
-        Person person = PersonUtil.generatePerson();
-        Element personElement = new Element("person");
-        personElement.addContent(new Element("titleId")
-                .setText(String.valueOf(random.nextInt(titleValues.size()))));
-        personElement.addContent(new Element("fullName").setText(person.getFullName()));
-        personElement.addContent(new Element("dateOfBirth").setText(String.valueOf(person.getDateOfBirth())));
-        personElement.addContent(new Element("gender").setText(person.getGender()));
-        personElement.addContent(new Element("address").setText(person.getAddress()));
-        personElement.addContent(new Element("email").setText(person.getEmail()));
-        personElement.addContent(new Element("phoneNumber").setText(person.getPhoneNumber()));
-        rootElement.addContent(personElement);
-
-        Element studentElement = new Element("student");
-        studentElement.addContent(new Element("personId")
-                .setText(String.valueOf(random.nextInt( 1, 10))));
-        studentElement.addContent(new Element("eduGroupId")
-                .setText(String.valueOf(random.nextInt( 1, 10))));
-        rootElement.addContent(studentElement);
-
-        Element graduateElement = new Element("graduate");
-        graduateElement.addContent(new Element("personId")
-                .setText(String.valueOf(random.nextInt( 1, 10))));
-        graduateElement.addContent(new Element("degreeId")
-                .setText(String.valueOf(random.nextInt(degreeValues.size()))));
-        graduateElement.addContent(new Element("qualificationId")
-                .setText(String.valueOf(random.nextInt(qualificationValues.size()))));
-        rootElement.addContent(graduateElement);
-
-        Element applicantElement = new Element("applicant");
-        applicantElement.addContent(new Element("personId")
-                .setText(String.valueOf(random.nextInt( 1, 10))));
-        applicantElement.addContent(new Element("courseId")
-                .setText(String.valueOf(random.nextInt( 1, 10))));
-        rootElement.addContent(applicantElement);
-
-        return document;
-    }
 
 //    public static <T> T xmlToAnyObject(String xmlString, Class<T> clazz, String rootElementName) throws JAXBException {
 //        JAXBContext jaxbContext = JAXBContext.newInstance(rootElementName, clazz.getClassLoader());
