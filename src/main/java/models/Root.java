@@ -1,4 +1,6 @@
 package models;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,14 +16,21 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Root {
 
-    @XmlElement(name = "person")
-    private List<Person> persons;
-    @XmlElement(name = "student")
-    private List<Student> students;
-    @XmlElement(name = "graduate")
-    private List<Graduate> graduates;
-    @XmlElement(name = "applicant")
-    private List<Applicant> applicants;
+    private Person person;
+    private Student student;
+    private Graduate graduate;
+    private Applicant applicant;
+
+    @JsonCreator
+    public Root(@JsonProperty("person") Person person,
+                @JsonProperty("student") Student student,
+                @JsonProperty("graduate") Graduate graduate,
+                @JsonProperty("applicant") Applicant applicant) {
+        this.person = person;
+        this.student = student;
+        this.graduate = graduate;
+        this.applicant = applicant;
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ public class Applicant extends Person {
     private Integer personId;
     private Integer courseId;
 
+    @JsonCreator
     public Applicant(@JsonProperty("personId") Integer personId,
                      @JsonProperty("courseId") Integer courseId) {
         this.personId = personId;

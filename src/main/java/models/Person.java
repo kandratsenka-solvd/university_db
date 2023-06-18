@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Person {
     private String email;
     private String phoneNumber;
 
+    @JsonCreator
     public Person(@JsonProperty("titleId") Integer titleId,
                   @JsonProperty("fullName") String fullName,
                   @JsonProperty("dateOfBirth") Date dateOfBirth,

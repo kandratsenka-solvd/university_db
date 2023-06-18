@@ -1,5 +1,6 @@
 package utils;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.jdom2.Document;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -25,6 +26,10 @@ public class OutputUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String jsonToString(ObjectNode objectNode) {
+        return objectNode.toPrettyString();
     }
 }
 

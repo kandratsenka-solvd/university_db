@@ -73,18 +73,6 @@ public class XmlUtil {
         return null;
     }
 
-//    public static <T> T xmlToObjectsList(String fileName, Class<T> clazz) {
-//        try {
-//            File xmlFile = new File(FileManagerUtil.getFilePath(fileName));
-//            JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
-//            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-//            return (clazz.cast(jaxbUnmarshaller.unmarshal(xmlFile)));
-//        } catch (JAXBException e) {
-//            LOGGER.error("Failed when deserializing XML to objects list.");
-//        }
-//        return null;
-//    }
-
     public static Document convertXmlToDocument(String fileName) {
         try {
 //            File xmlFile = new File(FileManagerUtil.getFilePath(fileName));
@@ -97,17 +85,6 @@ public class XmlUtil {
         return null;
     }
 
-
-
-//    public static <T> T xmlToAnyObject(String xmlString, Class<T> clazz, String rootElementName) throws JAXBException {
-//        JAXBContext jaxbContext = JAXBContext.newInstance(rootElementName, clazz.getClassLoader());
-//        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-//        StringReader reader = new StringReader(xmlString);
-//        JAXBElement<T> jaxbElement = unmarshaller.unmarshal(new StreamSource(reader), clazz);
-//        return jaxbElement.getValue();
-//    }
-//
-//
 //    @SneakyThrows
 //    public static <T> T xmlToObj(String xmlString, Class<T> clazz) {
 //        SAXBuilder saxBuilder = new SAXBuilder();
