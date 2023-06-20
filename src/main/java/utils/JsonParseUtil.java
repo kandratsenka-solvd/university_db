@@ -12,13 +12,13 @@ public class JsonParseUtil {
     private static final Logger LOGGER = LogManager.getLogger();
     static ObjectMapper objectMapper = new ObjectMapper();
 
-    public static <T> T jsonToClass(String strJson, Class<T> clazz) {
+    public static <T> T jsonToObject(String strJson, Class<T> clazz) {
 
         try {
-            LOGGER.info(String.format("Creating an instance of the %s from a json file", clazz));
+            LOGGER.info(String.format("Creating an instance of the %s from JSON.", clazz));
             return objectMapper.readValue(strJson, clazz);
         } catch (IOException e) {
-            LOGGER.error(String.format("Error when trying to create an instance of the %s", clazz));
+            LOGGER.error(String.format("Failed when trying to create an instance of the %s", clazz));
             throw new RuntimeException(e);
         }
     }
