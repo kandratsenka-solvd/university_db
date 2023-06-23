@@ -72,7 +72,7 @@ public class StudentDAO extends PersonDAO {
     public void graduateStudent(Integer personId, Integer qualification_id, Integer degree_id) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
-                    .getFileAsString("queries/read/graduateStudent.sql"));
+                    .getFileAsString("queries/update/graduateStudent.sql"));
             preparedStatement.setInt(1, personId);
             preparedStatement.setInt(2, qualification_id);
             preparedStatement.setInt(3, degree_id);

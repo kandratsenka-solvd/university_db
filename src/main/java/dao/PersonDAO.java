@@ -40,7 +40,6 @@ public class PersonDAO implements ICommonDAO<Person> {
         }
     }
 
-
     @Override
     public ResultSet getAll() {
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -60,6 +59,26 @@ public class PersonDAO implements ICommonDAO<Person> {
         ConnectionPool.getInstance().returnConnection(connection);
         return resultSet;
     }
+
+//    @Override
+//    public ResultSet getAll() {
+//        Connection connection = ConnectionPool.getInstance().getConnection();
+//        PreparedStatement preparedStatement;
+//        ResultSet resultSet;
+//        try {
+//            preparedStatement = connection.prepareStatement(FileManagerUtil
+//                    .getFileAsString("queries/read/getAllPerson.sql"));
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            resultSet = preparedStatement.executeQuery();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        ConnectionPool.getInstance().returnConnection(connection);
+//        return resultSet;
+//    }
 
     @Override
     public Person getById(int id) {

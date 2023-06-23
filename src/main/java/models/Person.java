@@ -15,6 +15,7 @@ import java.util.Date;
 @XmlRootElement(name = "person")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Person {
+    private Integer personId;
     private Integer titleId;
     private String fullName;
     private Date dateOfBirth;
@@ -24,13 +25,15 @@ public class Person {
     private String phoneNumber;
 
     @JsonCreator
-    public Person(@JsonProperty("titleId") Integer titleId,
+    public Person(@JsonProperty("personId") Integer personId,
+                  @JsonProperty("titleId") Integer titleId,
                   @JsonProperty("fullName") String fullName,
                   @JsonProperty("dateOfBirth") Date dateOfBirth,
                   @JsonProperty("gender") String gender,
                   @JsonProperty("address") String address,
                   @JsonProperty("email") String email,
                   @JsonProperty("phoneNumber") String phoneNumber) {
+        this.personId = personId;
         this.titleId = titleId;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;

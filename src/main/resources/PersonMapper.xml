@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.IPersonMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="person_id" keyProperty="personId">
+        INSERT INTO person (title_id, full_name, date_of_birth, gender, address, email, phone_number)
+        VALUES (#{titleId}, #{fullName}, #{dateOfBirth}, #{gender}, #{address}, #{email}, #{phoneNumber})
+    </insert>
+
+    <select id="getAll" resultMap="personResultMap">
+        SELECT * FROM person
+    </select>
+
+    <resultMap id="personResultMap" type="models.Person">
+        <id property="personId" column="person_id" />
+        <result property="titleId" column="title_id" />
+        <result property="fullName" column="full_name" />
+        <result property="dateOfBirth" column="date_of_birth" />
+        <result property="gender" column="gender" />
+        <result property="address" column="address" />
+        <result property="email" column="email" />
+        <result property="phoneNumber" column="phone_number" />
+    </resultMap>
+
+    <select id="getGeneratedKey" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+</mapper>
