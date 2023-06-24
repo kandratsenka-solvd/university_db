@@ -17,12 +17,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Student extends Person {
 
+    private Integer studentId;
     private Integer personId;
     private Integer eduGroupId;
 
     @JsonCreator
-    public Student(@JsonProperty("personId") Integer personId,
+    public Student(@JsonProperty("studentId") Integer studentId,
+                   @JsonProperty("personId") Integer personId,
                    @JsonProperty("eduGroupId") Integer eduGroupId) {
+        this.studentId = studentId;
         this.personId = personId;
         this.eduGroupId = eduGroupId;
     }

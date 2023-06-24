@@ -9,8 +9,15 @@
         VALUES (#{titleId}, #{fullName}, #{dateOfBirth}, #{gender}, #{address}, #{email}, #{phoneNumber})
     </insert>
 
+    <select id="getById" resultType="models.Person">
+        SELECT *
+          FROM person
+         WHERE person_id = #{personId}
+    </select>
+
     <select id="getAll" resultMap="personResultMap">
-        SELECT * FROM person
+        SELECT *
+          FROM person
     </select>
 
     <resultMap id="personResultMap" type="models.Person">
@@ -27,5 +34,11 @@
     <select id="getGeneratedKey" resultType="int">
         SELECT LAST_INSERT_ID()
     </select>
+
+    <delete id="deleteById">
+        DELETE
+          FROM person
+         WHERE person_id = #{personId}
+    </delete>
 
 </mapper>

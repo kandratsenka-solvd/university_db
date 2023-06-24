@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.IStudentMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="student_id" keyProperty="studentId">
+        INSERT INTO student (person_id, edu_group_id)
+        VALUES (#{personId}, #{eduGroupId})
+    </insert>
+
+    <select id="getById" resultType="models.Student">
+        SELECT *
+        FROM student
+        WHERE student_id = #{studentId}
+    </select>
+
+    <select id="getAll" resultMap="personResultMap">
+        SELECT *
+        FROM student
+    </select>
+
+    <resultMap id="personResultMap" type="models.Student">
+        <id property="studentId" column="student_id" />
+        <result property="personId" column="person_id" />
+        <result property="eduGroupId" column="edu_group_id" />
+    </resultMap>
+
+    <select id="getGeneratedKey" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM student
+        WHERE student_id = #{studentId}
+    </delete>
+
+</mapper>

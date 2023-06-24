@@ -1,7 +1,6 @@
 package tests;
 
-import mappers.IPersonMapper;
-import models.Person;
+import mappers.IStudentMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,24 +12,21 @@ import utils.PersonUtil;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
 
-public class MyBatisTest {
+public class MyBatisStudentTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Test
-    public void testMyBatis() {
+    public void testAddStudent() {
         try (Reader reader = Resources.getResourceAsReader("mybatis-config.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             SqlSession sqlSession = sqlSessionFactory.openSession(false);
-            IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
-            iPersonMapper.add(PersonUtil.generatePerson());
-            int i = iPersonMapper.getGeneratedKey();
-            LOGGER.info("person_id: " + i);
-            List<Person> personList = iPersonMapper.getAll();
-            Person person = personList.get(personList.size() - 1);
-            LOGGER.info(person.getFullName());
+            System.out.println(sqlSession.hashCode());
+            IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
+            iStudentMapper.add(PersonUtil.generateStudent());
+            int i = iStudentMapper.getGeneratedKey();
+            LOGGER.info("student_id: " + i);
             sqlSession.commit();
             sqlSession.close();
         } catch (IOException e) {

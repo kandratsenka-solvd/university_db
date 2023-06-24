@@ -15,6 +15,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="PersonMapper.xml" />
+        <mapper resource="xmlMappers/PersonMapper.xml" />
+        <mapper resource="xmlMappers/StudentMapper.xml" />
     </mappers>
 </configuration>
