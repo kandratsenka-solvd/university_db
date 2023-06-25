@@ -9,10 +9,14 @@
         VALUES (#{personId}, #{eduGroupId})
     </insert>
 
-    <select id="getById" resultType="models.Student">
+    <select id="getById" resultMap="studentResultMap">
         SELECT *
         FROM student
         WHERE student_id = #{studentId}
+    </select>
+
+    <select id="getGeneratedKey" resultType="int">
+        SELECT LAST_INSERT_ID()
     </select>
 
     <select id="getAll" resultMap="studentResultMap">
@@ -26,9 +30,12 @@
         <result property="eduGroupId" column="edu_group_id" />
     </resultMap>
 
-    <select id="getGeneratedKey" resultType="int">
-        SELECT LAST_INSERT_ID()
-    </select>
+    <update id="updateById">
+        UPDATE student
+           SET person_id = #{personId},
+               edu_group_id = #{eduGroupId}
+         WHERE student_id = #{studentId}
+    </update>
 
     <delete id="deleteById">
         DELETE

@@ -18,7 +18,7 @@ public class MyBatisEduGroupTest extends BaseTest {
     private final Connection connection = ConnectionPool.getInstance().getConnection();
 
     @Test
-    public void testEdu() {
+    public void testEduGroup() {
         SqlSession sqlSession = CustomSqlSession.openSession(connection);
         IEduGroupMapper iEduGroupMapper = sqlSession.getMapper(IEduGroupMapper.class);
         List<EduGroup> eduGroupList = iEduGroupMapper.getAll();
