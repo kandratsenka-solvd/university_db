@@ -15,12 +15,12 @@
         WHERE student_id = #{studentId}
     </select>
 
-    <select id="getAll" resultMap="personResultMap">
+    <select id="getAll" resultMap="studentResultMap">
         SELECT *
         FROM student
     </select>
 
-    <resultMap id="personResultMap" type="models.Student">
+    <resultMap id="studentResultMap" type="models.Student">
         <id property="studentId" column="student_id" />
         <result property="personId" column="person_id" />
         <result property="eduGroupId" column="edu_group_id" />

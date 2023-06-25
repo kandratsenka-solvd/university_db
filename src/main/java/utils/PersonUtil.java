@@ -27,9 +27,9 @@ public final class PersonUtil {
         return person;
     }
 
-    public static Student generateStudent() {
+    public static Student generateStudent(int personId) {
         Student student = new Student();
-        student.setPersonId(faker.number().numberBetween(1, 18));
+        student.setPersonId(personId);
         student.setEduGroupId(faker.number().numberBetween(1, 18));
         return student;
     }

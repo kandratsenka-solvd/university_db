@@ -17,5 +17,7 @@
     <mappers>
         <mapper resource="xmlMappers/PersonMapper.xml" />
         <mapper resource="xmlMappers/StudentMapper.xml" />
+        <mapper resource="xmlMappers/EduGroupMapper.xml" />
+        <mapper resource="xmlMappers/DegreeMapper.xml" />
     </mappers>
 </configuration>

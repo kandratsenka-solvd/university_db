@@ -9,7 +9,7 @@
         VALUES (#{titleId}, #{fullName}, #{dateOfBirth}, #{gender}, #{address}, #{email}, #{phoneNumber})
     </insert>
 
-    <select id="getById" resultType="models.Person">
+    <select id="getById" resultMap="personResultMap">
         SELECT *
           FROM person
          WHERE person_id = #{personId}
