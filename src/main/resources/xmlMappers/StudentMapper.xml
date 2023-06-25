@@ -43,4 +43,21 @@
          WHERE student_id = #{studentId}
     </delete>
 
+    <select id="getStudentDetailsList" resultMap="studentDetailsResultMap">
+        SELECT s.student_id,
+               p.full_name,
+               p.email,
+               e.group_name
+          FROM person p
+         INNER JOIN student s ON p.person_id = s.person_id
+         INNER JOIN edu_group e ON s.edu_group_id = e.edu_group_id
+    </select>
+
+    <resultMap id="studentDetailsResultMap" type="models.StudentDetails">
+        <id property="studentId" column="student_id" />
+        <result property="fullName" column="full_name" />
+        <result property="email" column="email" />
+        <result property="groupName" column="group_name" />
+    </resultMap>
+
 </mapper>

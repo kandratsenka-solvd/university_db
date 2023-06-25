@@ -4,6 +4,7 @@ import connection.ConnectionPool;
 import connection.CustomSqlSession;
 import mappers.IStudentMapper;
 import models.Student;
+import models.StudentDetails;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,16 @@ public class MyBatisStudentTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private final Connection connection = ConnectionPool.getInstance().getConnection();
+
+    @Test
+    public void testInnerJoinStudentDetails() {
+        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
+        List<StudentDetails> studentDetails = iStudentMapper.getStudentDetailsList();
+        for (int i = 0; i < 5; i++) {
+            LOGGER.info(studentDetails.get(i));
+        }
+    }
 
     @Test
     public void testAddStudent() {
