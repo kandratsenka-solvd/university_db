@@ -22,7 +22,7 @@ public class StudentTest extends BaseTest {
         int personId = personDAO.add(PersonUtil.generatePerson());
         System.out.println(personId);
         StudentDAO studentDAO = new StudentDAO(connection);
-        int studentId = studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        int studentId = studentDAO.addStudent(PersonUtil.generateStudent(1), personId);
         LOGGER.info(ResultSetUtil.getFirstRecord(studentDAO.getStudentById(studentId)));
         studentDAO.graduateStudent(studentId, 1, 1);
         studentDAO.updateStudent(studentId, 5);
@@ -36,7 +36,7 @@ public class StudentTest extends BaseTest {
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
         StudentDAO studentDAO = new StudentDAO(connection);
-        studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        studentDAO.addStudent(PersonUtil.generateStudent(2), personId);
         ConnectionPool.getInstance().returnConnection(connection);
         }
 
@@ -46,7 +46,7 @@ public class StudentTest extends BaseTest {
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
         StudentDAO studentDAO = new StudentDAO(connection);
-        studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        studentDAO.addStudent(PersonUtil.generateStudent(3), personId);
         ConnectionPool.getInstance().returnConnection(connection);
         }
 
@@ -56,7 +56,7 @@ public class StudentTest extends BaseTest {
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
         StudentDAO studentDAO = new StudentDAO(connection);
-        studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        studentDAO.addStudent(PersonUtil.generateStudent(4), personId);
         ConnectionPool.getInstance().returnConnection(connection);
         }
 
@@ -66,7 +66,7 @@ public class StudentTest extends BaseTest {
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
         StudentDAO studentDAO = new StudentDAO(connection);
-        studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        studentDAO.addStudent(PersonUtil.generateStudent(5), personId);
         ConnectionPool.getInstance().returnConnection(connection);
         }
 
@@ -76,7 +76,7 @@ public class StudentTest extends BaseTest {
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
         StudentDAO studentDAO = new StudentDAO(connection);
-        studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        studentDAO.addStudent(PersonUtil.generateStudent(6), personId);
         ConnectionPool.getInstance().returnConnection(connection);
     }
 
@@ -86,7 +86,7 @@ public class StudentTest extends BaseTest {
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
         StudentDAO studentDAO = new StudentDAO(connection);
-        studentDAO.addStudent(PersonUtil.generateStudent(30), personId);
+        studentDAO.addStudent(PersonUtil.generateStudent(7), personId);
         ConnectionPool.getInstance().returnConnection(connection);
         }
 }

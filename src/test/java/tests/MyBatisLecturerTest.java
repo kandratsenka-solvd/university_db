@@ -20,7 +20,7 @@ public class MyBatisLecturerTest {
 
     @Test
     public void testAddLecturer() {
-        int personId = 2;
+        int personId = 1;
         SqlSession sqlSession = CustomSqlSession.openSession(connection);
         ILecturerMapper iLecturerMapper = sqlSession.getMapper(ILecturerMapper.class);
         int lecturerId = iLecturerMapper.add(PersonUtil.generateLecturer(personId));
