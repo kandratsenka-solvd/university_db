@@ -7,6 +7,7 @@ import models.Person;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.PersonUtil;
 import java.sql.Connection;
@@ -21,9 +22,14 @@ public class MyBatisPersonTest extends BaseTest {
     public void testAddPerson() {
         SqlSession sqlSession = CustomSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
-        iPersonMapper.add(PersonUtil.generatePerson());
-        int i = iPersonMapper.getGeneratedKey();
-        LOGGER.info("person_id: " + i);
+        Person personFromGenerator = PersonUtil.generatePerson();
+        iPersonMapper.add(personFromGenerator);
+        int personId = iPersonMapper.getGeneratedKey();
+        Person personFromTable = iPersonMapper.getById(personId);
+        LOGGER.info("Expected result name: " + personFromGenerator.getFullName());
+        LOGGER.info("Actual result: " + personFromTable.getFullName());
+        Assert.assertEquals(personFromGenerator.getFullName(), personFromTable.getFullName(),
+                "Objects have different names.");
     }
 
     @Test
@@ -33,6 +39,16 @@ public class MyBatisPersonTest extends BaseTest {
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         Person person = iPersonMapper.getById(personId);
         LOGGER.info("Person: {}; {}; {}", person.getFullName(), person.getAddress(), person.getEmail());
+    }
+
+    @Test
+    public void testGetPersonByFullName() {
+        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
+        List<Person> personList = iPersonMapper.getAll();
+        String fullName = personList.get(0).getFullName();
+        Person person = iPersonMapper.getPersonByFullName(fullName);
+        LOGGER.info(person.getEmail());
     }
 
     @Test
@@ -46,8 +62,33 @@ public class MyBatisPersonTest extends BaseTest {
     }
 
     @Test
+    public void testUpdatePersonById() {
+        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
+        List<Person> personList = iPersonMapper.getAll();
+        Person oldPerson = personList.get(0);
+        LOGGER.info("Name before update: " + oldPerson.getFullName());
+        int personId = oldPerson.getPersonId();
+        Person newPerson = PersonUtil.generatePerson();
+        newPerson.setPersonId(personId);
+        iPersonMapper.updateById(newPerson);
+        LOGGER.info("Name after update: " + iPersonMapper.getById(personId).getFullName());
+        Assert.assertNotEquals(oldPerson.getFullName(), newPerson.getFullName());
+    }
+
+    @Test
+    public void testUpdateEmailByFullName() {
+        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
+        List<Person> personList = iPersonMapper.getAll();
+        Person person = personList.get(0);
+        String email = PersonUtil.generatePerson().getEmail();
+        iPersonMapper.updateEmailByFullName(person.getFullName(), email);
+    }
+
+    @Test
     public void testDeletePersonById() {
-        int personId = 83;
+        int personId = 90;
         SqlSession sqlSession = CustomSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         iPersonMapper.deleteById(personId);

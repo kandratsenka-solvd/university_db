@@ -15,11 +15,6 @@
          WHERE person_id = #{personId}
     </select>
 
-    <select id="getAll" resultMap="personResultMap">
-        SELECT *
-          FROM person
-    </select>
-
     <resultMap id="personResultMap" type="models.Person">
         <id property="personId" column="person_id" />
         <result property="titleId" column="title_id" />
@@ -34,6 +29,35 @@
     <select id="getGeneratedKey" resultType="int">
         SELECT LAST_INSERT_ID()
     </select>
+
+    <select id="getPersonByFullName">
+        SELECT *
+          FROM person
+         WHERE full_name = #{fullName}
+    </select>
+
+    <select id="getAll" resultMap="personResultMap">
+        SELECT *
+          FROM person
+    </select>
+
+    <update id="updateById">
+        UPDATE person
+           SET title_id = #{titleId},
+               full_name = #{fullName},
+               date_of_birth = #{dateOfBirth},
+               gender = #{gender},
+               address = #{address},
+               email = #{email},
+               phone_number = #{phoneNumber}
+         WHERE person_id = #{personId}
+    </update>
+
+    <update id="updateEmailByFullName">
+        UPDATE person
+        SET email = #{email}
+        WHERE full_name = #{fullName}
+    </update>
 
     <delete id="deleteById">
         DELETE
