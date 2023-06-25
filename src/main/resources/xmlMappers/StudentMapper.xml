@@ -11,8 +11,8 @@
 
     <select id="getById" resultMap="studentResultMap">
         SELECT *
-        FROM student
-        WHERE student_id = #{studentId}
+          FROM student
+         WHERE student_id = #{studentId}
     </select>
 
     <select id="getGeneratedKey" resultType="int">
@@ -21,7 +21,7 @@
 
     <select id="getAll" resultMap="studentResultMap">
         SELECT *
-        FROM student
+          FROM student
     </select>
 
     <resultMap id="studentResultMap" type="models.Student">
@@ -39,8 +39,8 @@
 
     <delete id="deleteById">
         DELETE
-        FROM student
-        WHERE student_id = #{studentId}
+          FROM student
+         WHERE student_id = #{studentId}
     </delete>
 
 </mapper>

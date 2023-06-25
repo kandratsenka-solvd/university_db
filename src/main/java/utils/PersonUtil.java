@@ -1,6 +1,7 @@
 package utils;
 
 import com.github.javafaker.Faker;
+import models.Lecturer;
 import models.Person;
 import models.Student;
 
@@ -32,5 +33,12 @@ public final class PersonUtil {
         student.setPersonId(personId);
         student.setEduGroupId(faker.number().numberBetween(1, 18));
         return student;
+    }
+
+    public static Lecturer generateLecturer(int personId) {
+        Lecturer lecturer = new Lecturer();
+        lecturer.setPersonId(personId);
+        lecturer.setDegreeId(faker.number().numberBetween(1, 3));
+        return lecturer;
     }
 }

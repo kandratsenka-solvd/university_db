@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.ILecturerMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="lecturer_id" keyProperty="lecturerId">
+        INSERT INTO lecturer (person_id, degree_id)
+        VALUES (#{personId}, #{degreeId})
+    </insert>
+
+    <resultMap id="lecturerResultMap" type="models.Lecturer">
+        <id property="lecturerId" column="lecturer_id" />
+        <result property="personId" column="person_id" />
+        <result property="degreeId" column="degree_id" />
+    </resultMap>
+
+    <select id="getGeneratedKey" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <select id="getById" resultMap="lecturerResultMap">
+        SELECT *
+          FROM lecturer
+         WHERE lecturer_id = #{lecturerId}
+    </select>
+
+    <select id="getAll" resultMap="lecturerResultMap">
+        SELECT *
+          FROM lecturer
+    </select>
+
+    <update id="updateById">
+        UPDATE lecturer
+           SET person_id = #{personId},
+               degree_id = #{degreeId}
+        WHERE lecturer_id = #{lecturerId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+          FROM lecturer
+         WHERE lecturer_id = #{lecturerId}
+    </delete>
+
+</mapper>
