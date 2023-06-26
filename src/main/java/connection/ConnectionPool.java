@@ -2,10 +2,8 @@ package connection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.FileManagerUtil;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,9 +15,6 @@ public class ConnectionPool {
     private final BlockingQueue<Connection> freeConnections;
     private final ReentrantLock lock = new ReentrantLock();
     private static volatile ConnectionPool instance;
-    private static final String URL = FileManagerUtil.getValue("config.json", "url");
-    private static final String USERNAME = FileManagerUtil.getValue("credentials.json", "username");
-    private static final String PASSWORD = FileManagerUtil.getValue("credentials.json", "password");
 
     private ConnectionPool() {
         createConnectionList();
@@ -40,19 +35,8 @@ public class ConnectionPool {
 
     private static void createConnectionList() {
         for (int i = 0; i < INITIAL_POOL_SIZE; i++) {
-            allConnections.add(openConnection());
+            allConnections.add(DbConnection.open());
         }
-    }
-
-    private static Connection openConnection() {
-        Connection connection;
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            LOGGER.info("Created connection: " + connection);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return connection;
     }
 
     public Connection getConnection() {
@@ -102,12 +86,8 @@ public class ConnectionPool {
 
     public void closeAllConnections() {
         for (Connection connection : allConnections) {
-            try {
-                LOGGER.info("Closing the connection [{}]", connection);
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Failed to close the connection [{}]", connection);
-            }
+            LOGGER.info("Closing the connection [{}]", connection);
+            DbConnection.close(connection);
         }
         allConnections.clear();
         freeConnections.clear();

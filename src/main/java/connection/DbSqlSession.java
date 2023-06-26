@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomSqlSession {
+public class DbSqlSession {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String MYBATIS_CONFIG_PATH = "mybatis-config.xml";
@@ -39,7 +39,7 @@ public class CustomSqlSession {
 
     public static void closeAllSessions() {
         for(SqlSession sqlSession : sqlSessionList) {
-            CustomSqlSession.closeSession(sqlSession);
+            DbSqlSession.closeSession(sqlSession);
         }
         LOGGER.info("Clearing sql sessions list.");
         sqlSessionList.clear();
