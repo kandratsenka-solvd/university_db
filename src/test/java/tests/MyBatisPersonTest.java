@@ -1,7 +1,7 @@
 package tests;
 
 import connection.ConnectionPool;
-import connection.CustomSqlSession;
+import connection.DbSqlSession;
 import mappers.IPersonMapper;
 import models.Person;
 import org.apache.ibatis.session.SqlSession;
@@ -20,7 +20,7 @@ public class MyBatisPersonTest extends BaseTest {
 
     @Test
     public void testAddPerson() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         Person personFromGenerator = PersonUtil.generatePerson();
         iPersonMapper.add(personFromGenerator);
@@ -35,7 +35,7 @@ public class MyBatisPersonTest extends BaseTest {
     @Test
     public void testGetPersonById() {
         int personId = 2;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         Person person = iPersonMapper.getById(personId);
         LOGGER.info("Person: {}; {}; {}", person.getFullName(), person.getAddress(), person.getEmail());
@@ -43,7 +43,7 @@ public class MyBatisPersonTest extends BaseTest {
 
     @Test
     public void testGetPersonByFullName() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         List<Person> personList = iPersonMapper.getAll();
         String fullName = personList.get(0).getFullName();
@@ -54,7 +54,7 @@ public class MyBatisPersonTest extends BaseTest {
     @Test
     public void testGetPersonList() {
         int id = 1;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         List<Person> personList = iPersonMapper.getAll();
         Person person = personList.get(id);
@@ -63,7 +63,7 @@ public class MyBatisPersonTest extends BaseTest {
 
     @Test
     public void testUpdatePersonById() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         List<Person> personList = iPersonMapper.getAll();
         Person oldPerson = personList.get(0);
@@ -78,19 +78,28 @@ public class MyBatisPersonTest extends BaseTest {
 
     @Test
     public void testUpdateEmailByFullName() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         List<Person> personList = iPersonMapper.getAll();
-        Person person = personList.get(0);
+        Person personActual = personList.get(0);
+        int personId = personActual.getPersonId();
         String email = PersonUtil.generatePerson().getEmail();
-        iPersonMapper.updateEmailByFullName(person.getFullName(), email);
+        iPersonMapper.updateEmailByFullName(personActual.getFullName(), email);
+        Person personExpected = iPersonMapper.getById(personId);
+        String oldEmail = personActual.getEmail();
+        String newEmail = personExpected.getEmail();
+        Assert.assertNotEquals(oldEmail, newEmail);
+        LOGGER.info("Old email: {}; New email: {}", oldEmail, newEmail);
     }
 
     @Test
     public void testDeletePersonById() {
-        int personId = 90;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        int personId = 100;
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         iPersonMapper.deleteById(personId);
+        Person person = iPersonMapper.getById(personId);
+        LOGGER.info(person);
+        Assert.assertNull(person);
     }
 }

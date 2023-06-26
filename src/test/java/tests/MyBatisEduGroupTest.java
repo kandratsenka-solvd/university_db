@@ -1,7 +1,7 @@
 package tests;
 
 import connection.ConnectionPool;
-import connection.CustomSqlSession;
+import connection.DbSqlSession;
 import mappers.IEduGroupMapper;
 import models.EduGroup;
 import org.apache.ibatis.session.SqlSession;
@@ -19,7 +19,7 @@ public class MyBatisEduGroupTest extends BaseTest {
 
     @Test
     public void testEduGroup() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IEduGroupMapper iEduGroupMapper = sqlSession.getMapper(IEduGroupMapper.class);
         List<EduGroup> eduGroupList = iEduGroupMapper.getAll();
         LOGGER.info(eduGroupList.get(0));

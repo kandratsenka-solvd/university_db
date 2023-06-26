@@ -1,7 +1,7 @@
 package tests;
 
 import connection.ConnectionPool;
-import connection.CustomSqlSession;
+import connection.DbSqlSession;
 import mappers.IStudentMapper;
 import models.Student;
 import models.StudentDetails;
@@ -23,7 +23,7 @@ public class MyBatisStudentTest {
 
     @Test
     public void testInnerJoinStudentDetails() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
         List<StudentDetails> studentDetails = iStudentMapper.getStudentDetailsList();
         for (int i = 0; i < 5; i++) {
@@ -33,7 +33,7 @@ public class MyBatisStudentTest {
 
     @Test
     public void testAddStudent() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
         iStudentMapper.add(PersonUtil.generateStudent(100));
         int i = iStudentMapper.getGeneratedKey();
@@ -43,7 +43,7 @@ public class MyBatisStudentTest {
     @Test
     public void testGetStudentById() {
         int studentId = 40;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
         Student student = iStudentMapper.getById(studentId);
         LOGGER.info(student);
@@ -51,7 +51,7 @@ public class MyBatisStudentTest {
 
     @Test
     public void testGetStudentList() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
         List<Student> studentList = iStudentMapper.getAll();
         LOGGER.info(studentList.get(0));
@@ -59,7 +59,7 @@ public class MyBatisStudentTest {
 
     @Test
     public void testUpdateStudent() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
         List<Student> studentList = iStudentMapper.getAll();
         Student oldStudent = studentList.get(0);
@@ -75,7 +75,7 @@ public class MyBatisStudentTest {
     @Test
     public void testDeleteStudentById() {
         int studentId = 36;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
         iStudentMapper.deleteById(studentId);
     }

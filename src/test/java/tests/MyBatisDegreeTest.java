@@ -1,7 +1,7 @@
 package tests;
 
 import connection.ConnectionPool;
-import connection.CustomSqlSession;
+import connection.DbSqlSession;
 import mappers.IDegreeMapper;
 import models.DegreeModel;
 import org.apache.ibatis.session.SqlSession;
@@ -18,7 +18,7 @@ public class MyBatisDegreeTest {
 
     @Test
     public void testDegree() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         IDegreeMapper iDegreeMapper = sqlSession.getMapper(IDegreeMapper.class);
         List<DegreeModel> degreeModelList = iDegreeMapper.getAll();
         LOGGER.info(degreeModelList);

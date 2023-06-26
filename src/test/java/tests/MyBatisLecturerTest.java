@@ -1,7 +1,7 @@
 package tests;
 
 import connection.ConnectionPool;
-import connection.CustomSqlSession;
+import connection.DbSqlSession;
 import mappers.ILecturerMapper;
 import models.Lecturer;
 import org.apache.ibatis.session.SqlSession;
@@ -21,7 +21,7 @@ public class MyBatisLecturerTest {
     @Test
     public void testAddLecturer() {
         int personId = 1;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         ILecturerMapper iLecturerMapper = sqlSession.getMapper(ILecturerMapper.class);
         int lecturerId = iLecturerMapper.add(PersonUtil.generateLecturer(personId));
         LOGGER.info("lecturer_id: " + lecturerId);
@@ -30,7 +30,7 @@ public class MyBatisLecturerTest {
     @Test
     public void testGetLecturerById() {
         int lecturerId = 1;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         ILecturerMapper iLecturerMapper = sqlSession.getMapper(ILecturerMapper.class);
         Lecturer lecturer = iLecturerMapper.getById(lecturerId);
         LOGGER.info(lecturer);
@@ -38,7 +38,7 @@ public class MyBatisLecturerTest {
 
     @Test
     public void testGetLecturerList() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         ILecturerMapper iLecturerMapper = sqlSession.getMapper(ILecturerMapper.class);
         List<Lecturer> lecturerList = iLecturerMapper.getAll();
         LOGGER.info(lecturerList);
@@ -46,7 +46,7 @@ public class MyBatisLecturerTest {
 
     @Test
     public void testUpdateLecturerById() {
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         ILecturerMapper iLecturerMapper = sqlSession.getMapper(ILecturerMapper.class);
         List<Lecturer> lecturerList = iLecturerMapper.getAll();
         Lecturer oldLecturer = lecturerList.get(0);
@@ -60,7 +60,7 @@ public class MyBatisLecturerTest {
     @Test
     public void testDeleteLecturerById() {
         int lecturerId = 2;
-        SqlSession sqlSession = CustomSqlSession.openSession(connection);
+        SqlSession sqlSession = DbSqlSession.openSession(connection);
         ILecturerMapper iLecturerMapper = sqlSession.getMapper(ILecturerMapper.class);
         iLecturerMapper.deleteById(lecturerId);
     }

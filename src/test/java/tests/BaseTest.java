@@ -1,14 +1,14 @@
 package tests;
 
 import connection.ConnectionPool;
-import connection.CustomSqlSession;
+import connection.DbSqlSession;
 import org.testng.annotations.AfterTest;
 
 public class BaseTest {
 
     @AfterTest
     public void tearDown() {
-        CustomSqlSession.closeAllSessions();
+        DbSqlSession.closeAllSessions();
         ConnectionPool.getInstance().closeAllConnections();
     }
 }
