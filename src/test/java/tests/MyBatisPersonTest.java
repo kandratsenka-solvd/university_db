@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.PersonBuilder;
 import utils.PersonUtil;
 import java.sql.Connection;
 import java.util.List;
@@ -22,13 +23,22 @@ public class MyBatisPersonTest extends BaseTest {
     public void testAddPerson() {
         SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
-        Person personFromGenerator = PersonUtil.generatePerson();
-        iPersonMapper.add(personFromGenerator);
+        Person person = PersonUtil.generatePerson();
+        PersonBuilder personBuilder = new PersonBuilder();
+        Person personFromBuilder = personBuilder.setTitleId(person.getTitleId())
+                .setFullName(person.getFullName())
+                .setDateOfBirth(person.getDateOfBirth())
+                .setGender(person.getGender())
+                .setAddress(person.getAddress())
+                .setEmail(person.getEmail())
+                .setPhoneNumber(person.getPhoneNumber())
+                .build();
+        iPersonMapper.add(personFromBuilder);
         int personId = iPersonMapper.getGeneratedKey();
         Person personFromTable = iPersonMapper.getById(personId);
-        LOGGER.info("Expected result name: " + personFromGenerator.getFullName());
+        LOGGER.info("Expected result name: " + personFromBuilder.getFullName());
         LOGGER.info("Actual result: " + personFromTable.getFullName());
-        Assert.assertEquals(personFromGenerator.getFullName(), personFromTable.getFullName(),
+        Assert.assertEquals(personFromBuilder.getFullName(), personFromTable.getFullName(),
                 "Objects have different names.");
     }
 
