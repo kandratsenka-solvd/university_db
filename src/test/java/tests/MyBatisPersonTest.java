@@ -104,7 +104,7 @@ public class MyBatisPersonTest extends BaseTest {
 
     @Test
     public void testDeletePersonById() {
-        int personId = 100;
+        int personId = 40;
         SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         iPersonMapper.deleteById(personId);

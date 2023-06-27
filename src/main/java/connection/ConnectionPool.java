@@ -86,7 +86,6 @@ public class ConnectionPool {
 
     public void closeAllConnections() {
         for (Connection connection : allConnections) {
-            LOGGER.info("Closing the connection [{}]", connection);
             DbConnection.close(connection);
         }
         allConnections.clear();

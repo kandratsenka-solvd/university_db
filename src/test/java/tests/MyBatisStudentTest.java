@@ -35,7 +35,7 @@ public class MyBatisStudentTest {
     public void testAddStudent() {
         SqlSession sqlSession = DbSqlSession.openSession(connection);
         IStudentMapper iStudentMapper = sqlSession.getMapper(IStudentMapper.class);
-        iStudentMapper.add(PersonUtil.generateStudent(100));
+        iStudentMapper.add(PersonUtil.generateStudent(10));
         int i = iStudentMapper.getGeneratedKey();
         LOGGER.info("student_id: " + i);
     }
