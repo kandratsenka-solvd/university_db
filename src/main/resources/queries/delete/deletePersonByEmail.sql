@@ -1,2 +1,2 @@
 DELETE FROM person
-WHERE email = (?);
+ WHERE email = (?);

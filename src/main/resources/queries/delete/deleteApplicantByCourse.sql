@@ -1,2 +1,2 @@
 DELETE FROM applicant
-WHERE person_id = (?);
+ WHERE person_id = (?);
