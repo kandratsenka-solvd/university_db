@@ -63,11 +63,11 @@ public class MyBatisPersonTest extends BaseTest {
 
     @Test
     public void testGetPersonList() {
-        int id = 1;
+        int indexInList = 1;
         SqlSession sqlSession = DbSqlSession.openSession(connection);
         IPersonMapper iPersonMapper = sqlSession.getMapper(IPersonMapper.class);
         List<Person> personList = iPersonMapper.getAll();
-        Person person = personList.get(id);
+        Person person = personList.get(indexInList);
         LOGGER.info("Person full name: " + person.getFullName());
     }
 

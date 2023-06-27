@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class PersonBuilder {
 
+    private Integer personId;
     private Integer titleId;
     private String fullName;
     private Date dateOfBirth;
@@ -12,6 +13,11 @@ public class PersonBuilder {
     private String address;
     private String email;
     private String phoneNumber;
+
+    public PersonBuilder setPersonId(Integer personId) {
+        this.personId = personId;
+        return this;
+    }
 
     public PersonBuilder setTitleId(Integer titleId) {
         this.titleId = titleId;
@@ -50,6 +56,7 @@ public class PersonBuilder {
 
     public Person build() {
         Person person = new Person();
+        person.setPersonId(personId);
         person.setTitleId(titleId);
         person.setFullName(fullName);
         person.setDateOfBirth(dateOfBirth);
