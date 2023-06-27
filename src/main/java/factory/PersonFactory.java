@@ -18,7 +18,7 @@ public final class PersonFactory {
     }
 
     public static Person get(String personType, Integer personId) {
-        return switch (personType) {
+        return switch (personType.toLowerCase()) {
             case "person" -> generatePerson(personId);
             case "student" -> generateStudent(personId);
             case "lecturer" -> generateLecturer(personId);
