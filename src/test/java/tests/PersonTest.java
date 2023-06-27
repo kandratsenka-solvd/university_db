@@ -2,6 +2,11 @@ package tests;
 
 import connection.ConnectionPool;
 import dao.PersonDAO;
+import factory.PersonFactory;
+import models.Person;
+import models.Student;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 import utils.PersonUtil;
 
@@ -9,6 +14,18 @@ import java.sql.Connection;
 import java.util.concurrent.*;
 
 public class PersonTest {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    @Test
+    public void testFactory() {
+        Person person = PersonFactory.get("person", 0);
+        LOGGER.info(person);
+        Student student = (Student) PersonFactory.get("student", 0);
+        LOGGER.info(student);
+        Person lecturer = PersonFactory.get("lecturer", 0);
+        LOGGER.info(lecturer.getClass());
+    }
 
     @Test
     public void testAddPerson() throws InterruptedException {
