@@ -1,4 +1,4 @@
-package factory;
+package factories;
 
 import com.github.javafaker.Faker;
 import models.Lecturer;

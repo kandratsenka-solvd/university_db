@@ -2,7 +2,7 @@ package tests;
 
 import connection.ConnectionPool;
 import dao.PersonDAO;
-import factory.PersonFactory;
+import factories.PersonFactory;
 import models.Person;
 import models.Student;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +18,7 @@ public class PersonTest {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Test
-    public void testFactory() {
+    public void testPersonFactory() {
         Person person = PersonFactory.get("person", 0);
         LOGGER.info(person);
         Student student = (Student) PersonFactory.get("student", 0);
