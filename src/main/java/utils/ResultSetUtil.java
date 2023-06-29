@@ -8,6 +8,8 @@ import java.util.List;
 
 public class ResultSetUtil {
 
+    private ResultSetUtil(){}
+
     public static List<String> getFirstRecord(ResultSet resultSet) {
         ResultSetMetaData resultSetMetaData;
         try {
@@ -24,5 +26,4 @@ public class ResultSetUtil {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public final class PersonFactory {
+public class PersonFactory {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Faker faker;
@@ -28,7 +28,6 @@ public final class PersonFactory {
             }
         };
     }
-
 
     private static Person generatePerson(int personId) {
         Person person = new Person();

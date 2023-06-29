@@ -12,6 +12,8 @@ public class JsonParseUtil {
     private static final Logger LOGGER = LogManager.getLogger();
     static ObjectMapper objectMapper = new ObjectMapper();
 
+    private JsonParseUtil(){}
+
     public static <T> T jsonToObject(String strJson, Class<T> clazz) {
 
         try {

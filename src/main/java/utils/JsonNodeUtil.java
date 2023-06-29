@@ -13,6 +13,8 @@ import java.util.Random;
 
 public class JsonNodeUtil {
 
+    private JsonNodeUtil(){}
+
     public static ObjectNode generateRootJson() {
         Random random = new Random();
         List<Integer> degreeValues = new ArrayList<>();

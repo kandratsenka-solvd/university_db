@@ -19,6 +19,8 @@ public class DbSqlSession {
     private static final String MYBATIS_CONFIG_PATH = "mybatis-config.xml";
     private static final List<SqlSession> sqlSessionList = new ArrayList<>();
 
+    private DbSqlSession(){}
+
     public static SqlSession openSession(Connection connection) {
         SqlSession sqlSession;
         try (Reader reader = Resources.getResourceAsReader(MYBATIS_CONFIG_PATH)) {

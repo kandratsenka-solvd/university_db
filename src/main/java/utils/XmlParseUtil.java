@@ -25,6 +25,8 @@ public class XmlParseUtil {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private XmlParseUtil(){}
+
     public static boolean validateXmlAgainstXsd(String xsdFileName, String xmlContentString) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         URL url = classloader.getResource(xsdFileName);

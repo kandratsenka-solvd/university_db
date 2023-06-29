@@ -10,12 +10,14 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 
-public class DbConnection {
+class DbConnection {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String URL = FileManagerUtil.getValue("config.json", "url");
     private static final String USERNAME = FileManagerUtil.getValue("credentials.json", "username");
     private static final String PASSWORD = FileManagerUtil.getValue("credentials.json", "password");
+
+    private DbConnection(){}
 
     protected static Connection open() {
         Connection connection;

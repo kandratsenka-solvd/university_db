@@ -6,13 +6,15 @@ import models.Person;
 import models.Student;
 
 
-public final class PersonUtil {
+public class PersonUtil {
 
     private static final Faker faker;
 
     static {
         faker = new Faker();
     }
+
+    private PersonUtil(){}
 
     public static Person generatePerson() {
         Person person = new Person();

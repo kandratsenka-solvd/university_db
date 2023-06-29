@@ -13,6 +13,8 @@ import java.util.Random;
 
 public class XmlDocUtil {
 
+    private XmlDocUtil(){}
+
     public static Document generatePersonXml() {
         Element personElement = new Element("person");
         Document document = new Document(personElement);

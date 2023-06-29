@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class OutputUtil {
 
+    private OutputUtil(){}
+
     public static void writeXmlDocToFile(Document document) {
         XMLOutputter outPutter = new XMLOutputter(Format.getPrettyFormat());
         try {
