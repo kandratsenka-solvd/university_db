@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.IStudentMapper">
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="student_id" keyProperty="studentId">
+        INSERT INTO student (person_id, edu_group_id)
+        VALUES (#{personId}, #{eduGroupId})
+    </insert>
+
+    <select id="getById" resultMap="studentResultMap">
+        SELECT *
+          FROM student
+         WHERE student_id = #{studentId}
+    </select>
+
+    <select id="getGeneratedKey" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <select id="getAll" resultMap="studentResultMap">
+        SELECT *
+          FROM student
+    </select>
+
+    <resultMap id="studentResultMap" type="models.Student">
+        <id property="studentId" column="student_id" />
+        <result property="personId" column="person_id" />
+        <result property="eduGroupId" column="edu_group_id" />
+    </resultMap>
+
+    <update id="updateById">
+        UPDATE student
+           SET person_id = #{personId},
+               edu_group_id = #{eduGroupId}
+         WHERE student_id = #{studentId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+          FROM student
+         WHERE student_id = #{studentId}
+    </delete>
+
+    <select id="getStudentDetailsList" resultMap="studentDetailsResultMap">
+        SELECT s.student_id,
+               p.full_name,
+               p.email,
+               e.group_name
+          FROM person p
+         INNER JOIN student s ON p.person_id = s.person_id
+         INNER JOIN edu_group e ON s.edu_group_id = e.edu_group_id
+    </select>
+
+    <resultMap id="studentDetailsResultMap" type="models.StudentDetails">
+        <id property="studentId" column="student_id" />
+        <result property="fullName" column="full_name" />
+        <result property="email" column="email" />
+        <result property="groupName" column="group_name" />
+    </resultMap>
+
+</mapper>

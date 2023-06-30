@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mappers.IDegreeMapper">
+
+    <insert id="insert" keyColumn="degree_id" keyProperty="degreeId">
+        INSERT INTO degree (degree_name)
+        VALUES (#{degreeName,javaType=enums.Degree,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler})
+    </insert>
+
+    <insert id="add" keyColumn="degree_id" keyProperty="degreeId">
+        INSERT INTO degree (degree_name)
+        VALUES (#{degreeName,typeHandler=org.apache.ibatis.type.EnumTypeHandler})
+    </insert>
+
+    <select id="getAll" resultMap="degreeResultMap">
+        SELECT *
+          FROM degree
+    </select>
+
+    <resultMap id="degreeResultMap" type="models.DegreeModel">
+        <id property="degreeId" column="degree_id" />
+        <result property="degreeName" column="degree_name" />
+    </resultMap>
+
+</mapper>
