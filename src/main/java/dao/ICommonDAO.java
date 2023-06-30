@@ -8,5 +8,5 @@ public interface ICommonDAO<T> {
     int add(Person person);
     ResultSet getAll();
     T getById(int id);
-    void remove(T t);
+    void remove(int id);
 }

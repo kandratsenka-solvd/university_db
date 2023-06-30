@@ -61,12 +61,40 @@ public class PersonDAO implements ICommonDAO<Person> {
     }
 
     @Override
-    public Person getById(int id) {
-        return null;
+    public Person getById(int personId) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
+                    .getFileAsString("queries/read/getPersonById.sql"));
+            preparedStatement.setInt(1, personId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Person person = new Person();
+                person.setTitleId(resultSet.getInt("title_id"));
+                person.setFullName(resultSet.getString("full_name"));
+                person.setDateOfBirth(resultSet.getDate("date_of_birth"));
+                person.setGender(resultSet.getString("gender"));
+                person.setAddress(resultSet.getString("address"));
+                person.setEmail(resultSet.getString("email"));
+                person.setPhoneNumber(resultSet.getString("phone_number"));
+                return person;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void remove(Person person) {
-
+    public void remove(int personId) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FileManagerUtil
+                    .getFileAsString("queries/delete/deletePersonById.sql"));
+            preparedStatement.setInt(1, personId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -20,7 +20,6 @@ public class StudentTest extends BaseTest {
         Connection connection = ConnectionPool.getInstance().getConnection();
         PersonDAO personDAO = new PersonDAO(connection);
         int personId = personDAO.add(PersonUtil.generatePerson());
-        System.out.println(personId);
         StudentDAO studentDAO = new StudentDAO(connection);
         int studentId = studentDAO.addStudent(PersonUtil.generateStudent(1), personId);
         LOGGER.info(ResultSetUtil.getFirstRecord(studentDAO.getStudentById(studentId)));
